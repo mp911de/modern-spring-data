@@ -1,0 +1,7 @@
+= Modern Spring Data
+
+Repository hosting code to demonstrate modern data access with Spring Data.
+
+== License
+
+Modern Spring Data is Open Source software released under the https://www.apache.org/licenses/LICENSE-2.0.html[Apache 2.0 license].
