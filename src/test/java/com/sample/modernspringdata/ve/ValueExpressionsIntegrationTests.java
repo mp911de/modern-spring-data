@@ -17,8 +17,6 @@ package com.sample.modernspringdata.ve;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -30,15 +28,18 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
 
+import com.sample.modernspringdata.MongoDBContainers;
+
+/**
+ * Integration tests showing value expressions in action. Also, consider {@code myapp.tenant} in {@code application.properties}.
+ */
 @DataMongoTest
 @Testcontainers
 class ValueExpressionsIntegrationTests {
 
 	@Container
-	@ServiceConnection static MongoDBContainer container = new MongoDBContainer(
-			DockerImageName.parse("mongo:8.0.0-rc15").asCompatibleSubstituteFor("mongo")).withReuse(true);
+	@ServiceConnection static MongoDBContainer container = MongoDBContainers.createContainer();
 
 	@Autowired MongoOperations ops;
 

@@ -28,6 +28,8 @@ import org.springframework.data.mongodb.core.index.MongoPersistentEntityIndexRes
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
+ * Fixture to setup collections and test data for {@link Person}.
+ *
  * @author Mark Paluch
  */
 class PersonFixture {

@@ -19,6 +19,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.io.IOException;
 
+import com.sample.modernspringdata.MongoDBContainers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -37,7 +38,6 @@ import org.springframework.data.support.WindowIterator;
 import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
 
 /**
  * Integration tests showing scrolling queries using Mongo repositories.
@@ -47,8 +47,7 @@ import org.testcontainers.utility.DockerImageName;
 class RepositoryScrollingIntegrationTests {
 
 	@Container
-	@ServiceConnection static MongoDBContainer container = new MongoDBContainer(
-			DockerImageName.parse("mongo:8.0.0-rc15").asCompatibleSubstituteFor("mongo")).withReuse(true);
+	@ServiceConnection static MongoDBContainer container = MongoDBContainers.createContainer();
 
 	@Autowired MongoOperations ops;
 

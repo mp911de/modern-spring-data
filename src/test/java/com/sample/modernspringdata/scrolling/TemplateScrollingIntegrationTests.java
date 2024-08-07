@@ -21,6 +21,7 @@ import static org.springframework.data.mongodb.core.query.Query.*;
 
 import java.io.IOException;
 
+import com.sample.modernspringdata.MongoDBContainers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -40,7 +41,6 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
 
 import com.mongodb.client.MongoClient;
 
@@ -52,8 +52,7 @@ import com.mongodb.client.MongoClient;
 class TemplateScrollingIntegrationTests {
 
 	@Container
-	@ServiceConnection static MongoDBContainer container = new MongoDBContainer(
-			DockerImageName.parse("mongo:8.0.0-rc15").asCompatibleSubstituteFor("mongo")).withReuse(true);
+	@ServiceConnection static MongoDBContainer container = MongoDBContainers.createContainer();
 
 	@Autowired MongoClient client;
 	@Autowired MongoOperations ops;
