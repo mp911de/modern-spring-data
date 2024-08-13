@@ -131,4 +131,20 @@ class FluentQueryIntegrationTests {
 				.extracting(NameDto::firstName)
 				.containsOnly("Olivia");
 	}
+
+	@Test
+	void findByQuerydsl() {
+
+		interface NameOnly {
+
+			String getFirstName();
+
+			String getLastName();
+		}
+
+		NameOnly williams = repository.projectByLastName(NameOnly.class, "Williams");
+
+		assertThat(williams.getFirstName()).isEqualTo("Olivia");
+		assertThat(williams.getLastName()).isEqualTo("Williams");
+	}
 }
