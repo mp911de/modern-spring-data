@@ -18,6 +18,7 @@ package com.sample.modernspringdata.fluent;
 import static org.assertj.core.api.Assertions.*;
 import static org.springframework.data.mongodb.core.query.Criteria.*;
 import static org.springframework.data.mongodb.core.query.Query.*;
+import static org.springframework.data.mongodb.core.query.Update.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -65,6 +66,22 @@ class FluentQueryIntegrationTests {
 	}
 
 	@Test
+	void findByQuerydsl() {
+
+		interface NameOnly {
+
+			String getFirstName();
+
+			String getLastName();
+		}
+
+		NameOnly williams = repository.projectByLastName(NameOnly.class, "Williams");
+
+		assertThat(williams.getFirstName()).isEqualTo("Olivia");
+		assertThat(williams.getLastName()).isEqualTo("Williams");
+	}
+
+	@Test
 	void findByFluentTemplateApi() {
 
 		interface NameOnly {
@@ -100,10 +117,9 @@ class FluentQueryIntegrationTests {
 		Optional<Person> modified = ops.update(Person.class)
 				.matching(query(where("country").is("Austria").and("lastName")
 						.is("Williams")))
-				.apply(Update.update("firstName", "Serena"))
+				.apply(update("firstName", "Serena"))
 				.withOptions(FindAndModifyOptions.options().returnNew(true))
 				.findAndModify();
-
 
 		assertThat(modified)
 				.isNotEmpty()
@@ -132,19 +148,4 @@ class FluentQueryIntegrationTests {
 				.containsOnly("Olivia");
 	}
 
-	@Test
-	void findByQuerydsl() {
-
-		interface NameOnly {
-
-			String getFirstName();
-
-			String getLastName();
-		}
-
-		NameOnly williams = repository.projectByLastName(NameOnly.class, "Williams");
-
-		assertThat(williams.getFirstName()).isEqualTo("Olivia");
-		assertThat(williams.getLastName()).isEqualTo("Williams");
-	}
 }

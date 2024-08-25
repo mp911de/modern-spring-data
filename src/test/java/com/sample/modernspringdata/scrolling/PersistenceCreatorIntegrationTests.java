@@ -34,6 +34,8 @@ import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import static org.springframework.data.mongodb.core.query.Update.*;
+
 /**
  * Integration tests showing {@link org.springframework.data.annotation.PersistenceCreator @PersistenceCreator} in
  * action.
@@ -52,7 +54,7 @@ class PersistenceCreatorIntegrationTests {
 	@BeforeEach
 	void setUp() throws IOException {
 		PersonFixture.setup(personTestData, ops);
-		ops.updateMulti(new Query(), Update.update("email", "foo"), Person.class);
+		ops.updateMulti(new Query(), update("email", "foo"), Person.class);
 	}
 
 	@Test

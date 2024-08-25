@@ -31,10 +31,21 @@ import com.querydsl.core.types.Predicate;
  */
 @Component("fluentPersonRepository")
 interface PersonRepository
-		extends Repository<Person, ObjectId>, QueryByExampleExecutor<Person>, QuerydslPredicateExecutor<Person> {
+		extends Repository<Person, ObjectId>,
+		QueryByExampleExecutor<Person>,
+		QuerydslPredicateExecutor<Person> {
 
+	/**
+	 * Find and project a single result by {@code name} and return it as {@code T}.
+	 *
+	 * @param projection
+	 * @param name
+	 * @return
+	 * @param <T>
+	 */
 	default <T> T projectByLastName(Class<T> projection, String name) {
-		Predicate predicate = QPerson.person.lastName.eq(name).and(QPerson.person.country.eq("Austria"));
+		Predicate predicate = QPerson.person.lastName.eq(name)
+				.and(QPerson.person.country.eq("Austria"));
 		return findBy(predicate, it -> it.as(projection).oneValue());
 	}
 }
